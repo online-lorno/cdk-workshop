@@ -4,9 +4,15 @@ import { Construct } from "constructs";
 import { CdkWorkshopStack } from "./cdk-workshop-stack";
 
 export class WorkshopPipelineStage extends cdk.Stage {
+  public readonly hcViewerUrl: cdk.CfnOutput;
+  public readonly hcEndpoint: cdk.CfnOutput;
+
   constructor(scope: Construct, id: string, props?: cdk.StageProps) {
     super(scope, id, props);
 
-    new CdkWorkshopStack(this, "WebService");
+    const service = new CdkWorkshopStack(this, "WebService");
+
+    this.hcEndpoint = service.hcEndpoint;
+    this.hcViewerUrl = service.hcViewerUrl;
   }
 }
